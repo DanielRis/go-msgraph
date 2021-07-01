@@ -120,6 +120,8 @@ func (g *GraphClient) makeGETAPICall(apicall string, getParams url.Values, v int
 	// TODO: Improve performance with using $skip & paging instead of retrieving all results with $top
 	// TODO: MaxPageSize is currently 999, if there are any time more than 999 entries this will make the program unpredictable... hence start to use paging (!)
 	getParams.Add("$top", strconv.Itoa(MaxPageSize))
+	getParams.Add("$filter", "startswith(displayName, 'AWS_')")
+
 	req.URL.RawQuery = getParams.Encode() // set query parameters
 
 	return g.performRequest(req, v)
